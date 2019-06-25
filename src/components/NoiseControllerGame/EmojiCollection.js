@@ -4,7 +4,6 @@ import Emoji from './Emoji';
 import './Game.scss';
 
 const EmojiCollection = props => {
-  console.log(props.emojis);
   return (
     <div className='animals'>
       {props.emojis.map(emoji => {
