@@ -1,3 +1,31 @@
-.hidden {
-  display: none;
+.Game {
+  margin: 20px auto;
+  width: 100%;
+
+  .toggleMicButton {
+    // background-color: #33691e;
+    // color: white;
+    // border-radius: 3px;
+    // padding: 5px 10px;
+    margin: 10px;
+    outline: none;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .animals {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    font-size: 80px;
+    margin: 20px auto;
+  }
+
+  .microphone {
+    color: #bbb;
+    margin-bottom: 5px;
+  }
 }
