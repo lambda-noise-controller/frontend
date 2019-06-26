@@ -23,8 +23,9 @@ class Register extends React.Component {
 
   register = e => {
     e.preventDefault();
-    this.props.register(this.state.credentials);
-    // .then(() => this.props.history.push('/protected'))
+    this.props
+      .register(this.state.credentials)
+      .then(() => this.props.history.push('/login'));
   };
 
   render() {
@@ -53,6 +54,12 @@ class Register extends React.Component {
             )}
           </button>
         </form>
+        <div className='switchAuthMode'>
+          Already have an account?
+          <button onClick={() => this.props.history.push('/login')}>
+            Login
+          </button>
+        </div>
       </div>
     );
   }

@@ -8,7 +8,6 @@ const POST_LOGIN_URL = 'https://bw-noise-controller.herokuapp.com/api/login';
 
 export const login = creds => dispatch => {
   dispatch({ type: LOGIN_START });
-  console.log(creds);
   return axios
     .post(POST_LOGIN_URL, creds)
     .then(res => {
@@ -30,7 +29,7 @@ const POST_REGISTER_URL =
 
 export const register = creds => dispatch => {
   dispatch({ type: REGISTER_START });
-  axios
+  return axios
     .post(POST_REGISTER_URL, creds)
     .then(res => {
       dispatch({ type: REGISTER_SUCCESS, payload: res });

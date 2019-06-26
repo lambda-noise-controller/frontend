@@ -18,7 +18,8 @@ export const rootReducer = (state = initialState, action) => {
     case actionType.LOGIN_SUCCESS:
       return {
         ...state,
-        loggingIn: false
+        loggingIn: false,
+        token: action.payload.token
       };
     case actionType.LOGIN_ERROR:
       return {

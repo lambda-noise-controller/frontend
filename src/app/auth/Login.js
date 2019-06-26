@@ -54,6 +54,12 @@ class Login extends React.Component {
             )}
           </button>
         </form>
+        <div className='switchAuthMode'>
+          Don't have an account yet?
+          <button onClick={() => this.props.history.push('/register')}>
+            Join
+          </button>
+        </div>
       </div>
     );
   }
