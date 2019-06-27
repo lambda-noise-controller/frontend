@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import AudioListener from './AudioListener/AudioListener';
 
 import { Button, Form, Grid, Label, Image } from 'semantic-ui-react';
@@ -128,6 +129,16 @@ class Game extends React.Component {
             top: 0
           }}
         />
+        <Button
+          onClick={() => {
+            localStorage.clear();
+            this.props.history.push('/login');
+          }}
+          size='small'
+          style={{ position: 'absolute', top: 10, right: 20 }}
+        >
+          Logout
+        </Button>
         <Grid
           relaxed
           textAlign='center'
@@ -165,7 +176,7 @@ class Game extends React.Component {
         <Grid
           verticalAlign='bottom'
           style={{
-            height: '70vh'
+            height: '50vh'
           }}
         >
           <Grid.Column>
@@ -180,4 +191,9 @@ class Game extends React.Component {
   }
 }
 
-export default Game;
+const mapStateToProps = ({}) => ({});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(Game);
