@@ -1,0 +1,60 @@
+.deco {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+
+  height: 100%;
+  width: 100%;
+  background-color: #b3e5fc;
+
+  /* this is what centers your element in the fixed wrapper*/
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center; /* aligns on vertical for column */
+  align-items: center;
+  div {
+    .background-images {
+      width: 2000px;
+      z-index: -99;
+      img {
+        position: absolute;
+        bottom: 130px;
+        left: 0px;
+        width: 100%;
+      }
+      .grass-gradient {
+        display: block;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        height: 130px;
+        width: 100%;
+        background-image: linear-gradient(to right, #599500, #79c400);
+      }
+    }
+
+    .foreground-images {
+      .background-images();
+      z-index: 5;
+      background-color: initial;
+
+      img {
+        bottom: 0px;
+        min-height: 100%;
+      }
+
+      .bottom-grass {
+        display: block;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        height: 200px;
+        width: 100%;
+        background-repeat: repeat-x;
+        background-size: auto 200px;
+      }
+    }
+  }
+}

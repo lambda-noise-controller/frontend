@@ -4,7 +4,9 @@ import AudioListener from './AudioListener/AudioListener';
 
 import { Button, Form, Grid, Label, Image } from 'semantic-ui-react';
 import { Slider } from 'react-semantic-ui-range';
-import cartoonRiverside from './assets/flora/cartoon-riverside.png';
+import treesFrame from './assets/flora/forest/trees-frame.png';
+import cartoonField from './assets/flora/forest/cartoon-field.png';
+import cartoonGrass from './assets/flora/forest/cartoon-grass.png';
 import EmojiCollection from './EmojiCollection';
 
 import './Game.scss';
@@ -122,13 +124,21 @@ class Game extends React.Component {
     };
     return (
       <div className='Game'>
-        <Image
-          src={cartoonRiverside}
-          style={{
-            position: 'absolute',
-            top: 0
-          }}
-        />
+        <div className='deco'>
+          <div>
+            <div className='background-images'>
+              <Image src={cartoonField} />
+              <div className='grass-gradient' />
+            </div>
+            <div className='foreground-images'>
+              <Image src={treesFrame} />
+              <div
+                className='bottom-grass'
+                style={{ zIndex: 1, backgroundImage: `url(${cartoonGrass})` }}
+              />
+            </div>
+          </div>
+        </div>
         <Button
           onClick={() => {
             localStorage.clear();
@@ -176,7 +186,7 @@ class Game extends React.Component {
         <Grid
           verticalAlign='bottom'
           style={{
-            height: '50vh'
+            height: '60vh'
           }}
         >
           <Grid.Column>

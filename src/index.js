@@ -9,7 +9,7 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { default as rootReducer } from './app/store/reducers';
-import 'semantic-ui-css/semantic.min.css';
+import 'semantic-ui-less/semantic.less';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
