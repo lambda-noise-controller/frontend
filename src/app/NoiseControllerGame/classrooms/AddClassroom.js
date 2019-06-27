@@ -22,11 +22,11 @@ class AddClassroom extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.getClassroom(this.props.token, 1);
+    // this.props.getClassroom(this.props.token, 1);
     if (this.props.userId) {
       this.props
         .addClassroom(this.props.token, this.state.classroom, this.props.userId)
-        .then(() => this.props.history.push('/game'));
+        .then(() => this.props.history.push('/classroom/success'));
     } else {
       this.props
         .getUserId(this.props.token, this.props.username)
@@ -37,7 +37,7 @@ class AddClassroom extends React.Component {
             this.props.userId
           )
         )
-        .then(() => this.props.history.push('/game'));
+        .then(() => this.props.history.push('/classroom/success'));
     }
   };
 

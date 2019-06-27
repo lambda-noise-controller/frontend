@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import './App.scss';
 
 import { Register, Login } from './auth';
@@ -10,6 +10,7 @@ import PrivateRoute from './components/PrivateRoute';
 function App() {
   return (
     <div className='App'>
+      <Redirect to='/classroom' />
       <Route exact path='/login' component={Login} />
       <Route exact path='/register' component={Register} />
       <PrivateRoute exact path='/classroom' component={Game} />
