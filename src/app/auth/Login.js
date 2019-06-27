@@ -27,7 +27,7 @@ class Login extends React.Component {
     e.preventDefault();
     this.props
       .login(this.state.credentials)
-      .then(() => this.props.history.push('/game'));
+      .then(() => this.props.history.push('/classroom'));
   };
 
   render() {
@@ -43,7 +43,6 @@ class Login extends React.Component {
             <Form.Input
               fluid
               type='text'
-              j
               name='username'
               icon='user'
               iconPosition='left'
