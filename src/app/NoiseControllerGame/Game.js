@@ -1,6 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import AudioListener from './AudioListener/AudioListener';
 
+import { Button, Form, Grid, Label, Image } from 'semantic-ui-react';
+import { Slider } from 'react-semantic-ui-range';
+import cartoonRiverside from './assets/flora/cartoon-riverside.png';
 import EmojiCollection from './EmojiCollection';
 
 import './Game.scss';
@@ -63,6 +67,16 @@ class Game extends React.Component {
     this.setState({ audio: null });
   };
 
+  toggleMicrophone = text => {
+    if (this.state.audio) {
+      this.stopMicrophone();
+      this.stopTimer();
+    } else {
+      this.getMicrophone();
+      this.startTimer();
+    }
+  };
+
   handleAboveThreshold = () => {
     function multipleViolations(state) {
       if (state.aboveThreshold) return null;
@@ -72,16 +86,6 @@ class Game extends React.Component {
       };
     }
     this.setState(multipleViolations);
-  };
-
-  toggleMicrophone = text => {
-    if (this.state.audio) {
-      this.stopMicrophone();
-      this.stopTimer();
-    } else {
-      this.getMicrophone();
-      this.startTimer();
-    }
   };
 
   checkVisibility = () => {
@@ -101,28 +105,95 @@ class Game extends React.Component {
     this.checkVisibility();
   };
 
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
+
   render() {
+    const thresholdSettings = {
+      start: this.state.threshold,
+      min: 0,
+      max: 255,
+      step: 1,
+      onChange: value => {
+        this.setState({ threshold: value });
+      }
+    };
     return (
       <div className='Game'>
-        <button
-          className='toggleMicButton'
-          onClick={() => this.toggleMicrophone('')}
+        <Image
+          src={cartoonRiverside}
+          style={{
+            position: 'absolute',
+            top: 0
+          }}
+        />
+        <Button
+          onClick={() => {
+            localStorage.clear();
+            this.props.history.push('/login');
+          }}
+          size='small'
+          style={{ position: 'absolute', top: 10, right: 20 }}
         >
-          {this.state.audio ? 'Stop Mic' : 'Start Mic'}
-        </button>
-        {this.state.audio && (
-          <div>
-            <AudioListener
-              {...this.state}
-              handleAboveThreshold={this.handleAboveThreshold}
-            />
-            {this.state.aboveThreshold ? <h1>loud</h1> : <h1>quiet</h1>}
-          </div>
-        )}
-        <EmojiCollection emojis={this.state.visibleAnimals} />
+          Logout
+        </Button>
+        <Grid
+          relaxed
+          textAlign='center'
+          // style={{ height: '10vh' }}
+          verticalAlign='middle'
+        >
+          <Grid.Column style={{ maxWidth: 450, marginLeft: 400 }}>
+            <Grid.Row style={{ margin: 10 }}>
+              <Button
+                color={this.state.audio ? 'red' : 'green'}
+                onClick={() => this.toggleMicrophone('')}
+              >
+                {this.state.audio ? 'Stop Mic' : 'Start Mic'}
+              </Button>
+            </Grid.Row>
+            {this.state.audio && (
+              <Grid.Row style={{ margin: 10 }}>
+                <AudioListener
+                  {...this.state}
+                  handleAboveThreshold={this.handleAboveThreshold}
+                />
+                <Form.Field>
+                  <Label>Threshold: {this.state.threshold}</Label>
+                  <Slider
+                    color='green'
+                    value={this.state.threshold}
+                    settings={thresholdSettings}
+                    onChange={this.handleChange}
+                  />
+                </Form.Field>
+              </Grid.Row>
+            )}
+          </Grid.Column>
+        </Grid>
+        <Grid
+          verticalAlign='bottom'
+          style={{
+            height: '50vh'
+          }}
+        >
+          <Grid.Column>
+            <Grid.Row>
+              <EmojiCollection emojis={this.state.visibleAnimals} />
+            </Grid.Row>
+            <Grid.Row />
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }
 }
 
-export default Game;
+const mapStateToProps = ({}) => ({});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(Game);

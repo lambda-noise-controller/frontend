@@ -1,25 +1,22 @@
 .Game {
-  margin: 20px auto;
+  margin: 0px auto;
   width: 100%;
-
-  .toggleMicButton {
-    // background-color: #33691e;
-    // color: white;
-    // border-radius: 3px;
-    // padding: 5px 10px;
-    margin: 10px;
-    outline: none;
-  }
 
   .hidden {
     display: none;
+  }
+
+  .visible {
+    display: initial;
   }
 
   .animals {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     width: 100%;
+    height: 100%;
     font-size: 80px;
     margin: 20px auto;
   }

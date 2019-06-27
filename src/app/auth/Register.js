@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { register } from '../store/actions';
 
+import { Button, Form, Grid, Message, Icon } from 'semantic-ui-react';
+
 class Register extends React.Component {
   state = {
     credentials: {
@@ -30,37 +32,69 @@ class Register extends React.Component {
 
   render() {
     return (
-      <div className='register-form'>
-        <form onSubmit={this.register}>
-          <label for='username'>Username</label>
-          <input
-            type='text'
-            name='username'
-            value={this.state.credentials.username}
-            onChange={this.handleChange}
+      <Grid
+        textAlign='center'
+        style={{ height: '100vh' }}
+        verticalAlign='middle'
+      >
+        <Grid.Column style={{ maxWidth: 450 }}>
+          <Message
+            attached
+            header='Register'
+            content='Start using Noise Controller in your classroom today!'
+            size='large'
           />
-          <label for='password'>Password</label>
-          <input
-            type='password'
-            name='password'
-            value={this.state.credentials.password}
-            onChange={this.handleChange}
-          />
-          <button type='submit'>
-            {this.props.registeringUser ? (
-              <Loader type='ThreeDots' color='#1f2a38' height='12' width='26' />
-            ) : (
-              'Login'
-            )}
-          </button>
-        </form>
-        <div className='switchAuthMode'>
-          Already have an account?
-          <button onClick={() => this.props.history.push('/login')}>
-            Login
-          </button>
-        </div>
-      </div>
+          <Form onSubmit={this.register} className='attached fluid segment'>
+            <Form.Input
+              fluid
+              type='text'
+              j
+              name='username'
+              icon='user'
+              iconPosition='left'
+              value={this.state.credentials.username}
+              onChange={this.handleChange}
+            />
+            <Form.Input
+              fluid
+              type='password'
+              name='password'
+              icon='lock'
+              iconPosition='left'
+              value={this.state.credentials.password}
+              onChange={this.handleChange}
+            />
+            <Button
+              color='green'
+              size='large'
+              type='submit'
+              disabled={
+                !(
+                  this.state.credentials.username &&
+                  this.state.credentials.password
+                )
+              }
+            >
+              {this.props.registeringUser ? (
+                <Loader type='ThreeDots' color='white' height='12' width='26' />
+              ) : (
+                'Login'
+              )}
+            </Button>
+          </Form>
+          <Message attached='bottom' warning>
+            <Icon name='help' />
+            Already have an account?
+            <Button
+              size='small'
+              style={{ marginLeft: 20 }}
+              onClick={() => this.props.history.push('/login')}
+            >
+              Login
+            </Button>
+          </Message>
+        </Grid.Column>
+      </Grid>
     );
   }
 }

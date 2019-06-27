@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { login } from '../store/actions';
 
+import { Button, Form, Grid, Message, Icon } from 'semantic-ui-react';
+
 class Login extends React.Component {
   state = {
     credentials: {
@@ -25,42 +27,68 @@ class Login extends React.Component {
     e.preventDefault();
     this.props
       .login(this.state.credentials)
-      .then(() => this.props.history.push('/game'));
+      .then(() => this.props.history.push('/classroom'));
   };
 
   render() {
     return (
-      <div className='login-form'>
-        <form onSubmit={this.login}>
-          <label for='username'>Username</label>
-          <input
-            type='text'
-            name='username'
-            value={this.state.credentials.username}
-            onChange={this.handleChange}
-          />
-          <label for='password'>Password</label>
-          <input
-            type='password'
-            name='password'
-            value={this.state.credentials.password}
-            onChange={this.handleChange}
-          />
-          <button type='submit'>
-            {this.props.loggingIn ? (
-              <Loader type='ThreeDots' color='#1f2a38' height='12' width='26' />
-            ) : (
-              'Login'
-            )}
-          </button>
-        </form>
-        <div className='switchAuthMode'>
-          Don't have an account yet?
-          <button onClick={() => this.props.history.push('/register')}>
-            Join
-          </button>
-        </div>
-      </div>
+      <Grid
+        textAlign='center'
+        style={{ height: '100vh' }}
+        verticalAlign='middle'
+      >
+        <Grid.Column style={{ maxWidth: 450 }}>
+          <Message attached header='Login' size='large' />
+          <Form onSubmit={this.login} className='attached fluid segment'>
+            <Form.Input
+              fluid
+              type='text'
+              name='username'
+              icon='user'
+              iconPosition='left'
+              value={this.state.credentials.username}
+              onChange={this.handleChange}
+            />
+            <Form.Input
+              fluid
+              type='password'
+              name='password'
+              icon='lock'
+              iconPosition='left'
+              value={this.state.credentials.password}
+              onChange={this.handleChange}
+            />
+            <Button
+              color='green'
+              size='large'
+              type='submit'
+              disabled={
+                !(
+                  this.state.credentials.username &&
+                  this.state.credentials.password
+                )
+              }
+            >
+              {this.props.loggingIn ? (
+                <Loader type='ThreeDots' color='white' height='12' width='26' />
+              ) : (
+                'Login'
+              )}
+            </Button>
+          </Form>
+          <Message attached='bottom' warning>
+            <Icon name='help' />
+            Don't have an account yet?
+            <Button
+              size='small'
+              style={{ marginLeft: 20 }}
+              onClick={() => this.props.history.push('/register')}
+            >
+              Join
+            </Button>
+          </Message>
+        </Grid.Column>
+      </Grid>
     );
   }
 }
