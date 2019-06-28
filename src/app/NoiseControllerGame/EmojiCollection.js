@@ -4,19 +4,15 @@ import Emoji from './Emoji';
 import './Game.scss';
 
 const EmojiCollection = props => {
-  return (
-    <div className='animals'>
-      {props.emojis.map(emoji => {
-        return (
-          <Emoji
-            glyph={emoji.glyph}
-            visibility={emoji.visibility}
-            visibilityThreshold={emoji.visibilityThreshold}
-          />
-        );
-      })}
-    </div>
-  );
+  if (props.emojis[0]) {
+    return (
+      <div className='animals'>
+        {props.emojis.map(emoji => {
+          return <Emoji {...emoji} />;
+        })}
+      </div>
+    );
+  } else return null;
 };
 
 export default EmojiCollection;

@@ -20,20 +20,24 @@ class Game extends React.Component {
       ticks: 0,
       ticksWhenSilent: 0,
       aboveThreshold: false,
-      animals: [],
-      visibleAnimals: []
+      animals: []
     };
   }
 
   componentDidMount() {
     this.emojis = ['🐭', '🦁', '🐻', '🐼', '🐷', '🐮', '🦊', '🐸', '🐶'];
     let inc = 0;
+    function getRandomArbitrary(min, max) {
+      return Math.random() * (max - min) + min;
+    }
     this.animals = this.emojis.map(glyph => {
       inc += 5;
       return {
         glyph: glyph,
-        visibility: true,
-        visibilityThreshold: inc
+        visibility: false,
+        visibilityThreshold: inc,
+        leftPos: `${getRandomArbitrary(15, 85)}%`,
+        bottomPos: `${getRandomArbitrary(-10, 150)}px`
       };
     });
     this.setState({ animals: this.animals });
@@ -54,7 +58,13 @@ class Game extends React.Component {
     this.resetAnimals();
   };
 
-  resetAnimals = () => this.setState({ visibleAnimals: [] });
+  // resetAnimals = () => this.setState({ visibleAnimals: [] });
+  resetAnimals = () => {
+    const allInvisible = this.state.animals.map(animal => {
+      return { ...animal, visibility: false };
+    });
+    this.setState({ animals: allInvisible });
+  };
 
   getMicrophone = async () => {
     const audio = await navigator.mediaDevices.getUserMedia({
@@ -82,20 +92,31 @@ class Game extends React.Component {
   handleAboveThreshold = () => {
     function multipleViolations(state) {
       if (state.aboveThreshold) return null;
-      return {
-        aboveThreshold: true,
-        ticksWhenSilent: 0
-      };
+      else {
+        this.resetAnimals();
+        return {
+          aboveThreshold: true,
+          ticksWhenSilent: 0
+        };
+      }
     }
     this.setState(multipleViolations);
   };
 
   checkVisibility = () => {
-    this.setState({
-      visibleAnimals: this.state.animals.filter(
-        animal => this.state.ticksWhenSilent >= animal.visibilityThreshold
-      )
+    // this.setState({
+    //   visibleAnimals: this.state.animals.filter(
+    //     animal => this.state.ticksWhenSilent >= animal.visibilityThreshold
+    //   )
+    // });
+    const visibleAnimals = this.state.animals.map(animal => {
+      if (this.state.ticksWhenSilent >= animal.visibilityThreshold) {
+        return { ...animal, visibility: true };
+      } else {
+        return { ...animal };
+      }
     });
+    this.setState({ animals: visibleAnimals });
   };
 
   tick = () => {
@@ -191,7 +212,7 @@ class Game extends React.Component {
         >
           <Grid.Column>
             <Grid.Row>
-              <EmojiCollection emojis={this.state.visibleAnimals} />
+              <EmojiCollection emojis={this.state.animals} />
             </Grid.Row>
             <Grid.Row />
           </Grid.Column>

@@ -17,7 +17,7 @@
   div {
     .background-images {
       width: 2000px;
-      z-index: -99;
+      z-index: -5;
       img {
         position: absolute;
         bottom: 130px;
@@ -56,5 +56,66 @@
         background-size: auto 200px;
       }
     }
+  }
+}
+
+.animals {
+  div {
+    font-size: 80px;
+    position: absolute;
+    bottom: 30px;
+  }
+  .hidden {
+    left: -100px;
+    -webkit-animation: jump 0.4s ease 0.1s infinite normal;
+    animation: jump 0.4s ease 0.1s infinite normal;
+    transition: left 1s;
+  }
+
+  .visible {
+    -webkit-animation: jump 0.4s ease 0.1s infinite normal;
+    animation: jump 0.4s ease 0.1s infinite normal;
+    transition: left 10s ease;
+  }
+}
+
+@-webkit-keyframes jump {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  20% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  60% {
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+  80% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(0);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+  80% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
