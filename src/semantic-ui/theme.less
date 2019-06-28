@@ -1,3 +1,23 @@
+.Game {
+  margin: 0px auto;
+  width: 100%;
+
+  .animals {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 20px auto;
+  }
+
+  .microphone {
+    color: #bbb;
+    margin-left: 14px;
+  }
+}
+
 .deco {
   position: fixed;
   top: 0px;
@@ -20,7 +40,7 @@
       z-index: -5;
       img {
         position: absolute;
-        bottom: 130px;
+        bottom: 160px;
         left: 0px;
         width: 100%;
       }
@@ -29,7 +49,7 @@
         position: absolute;
         bottom: 0px;
         left: 0px;
-        height: 130px;
+        height: 160px;
         width: 100%;
         background-image: linear-gradient(to right, #599500, #79c400);
       }
@@ -75,7 +95,7 @@
   .visible {
     -webkit-animation: jump 0.4s ease 0.1s infinite normal;
     animation: jump 0.4s ease 0.1s infinite normal;
-    transition: left 10s ease;
+    transition: left 10s;
   }
 }
 
@@ -117,5 +137,35 @@
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+.menu-container {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+
+  height: 180px;
+  width: 100%;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center; /* aligns on vertical for column */
+  align-items: center;
+
+  .dropped,
+  .collapsed {
+    position: absolute;
+    transition: top 0.3s ease;
+  }
+
+  .dropped {
+    top: 5px;
+  }
+
+  .collapsed {
+    top: -70px;
   }
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Emoji from './Emoji';
-import './Game.scss';
 
 const EmojiCollection = props => {
   if (props.emojis[0]) {

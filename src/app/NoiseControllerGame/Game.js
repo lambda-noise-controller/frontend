@@ -2,14 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import AudioListener from './AudioListener/AudioListener';
 
-import { Button, Form, Grid, Label, Image } from 'semantic-ui-react';
+import {
+  Button,
+  Grid,
+  Label,
+  Image,
+  Menu,
+  Container,
+  Icon
+} from 'semantic-ui-react';
 import { Slider } from 'react-semantic-ui-range';
 import treesFrame from './assets/flora/forest/trees-frame.png';
 import cartoonField from './assets/flora/forest/cartoon-field.png';
 import cartoonGrass from './assets/flora/forest/cartoon-grass.png';
 import EmojiCollection from './EmojiCollection';
-
-import './Game.scss';
 
 class Game extends React.Component {
   constructor(props) {
@@ -20,24 +26,40 @@ class Game extends React.Component {
       ticks: 0,
       ticksWhenSilent: 0,
       aboveThreshold: false,
-      animals: []
+      animals: [],
+      menuDropped: true
     };
   }
 
   componentDidMount() {
-    this.emojis = ['🐭', '🦁', '🐻', '🐼', '🐷', '🐮', '🦊', '🐸', '🐶'];
+    this.emojis = [
+      '🐭',
+      '🦁',
+      '🐻',
+      '🐼',
+      '🐷',
+      '🐮',
+      '🦊',
+      '🐸',
+      '🐶',
+      '🐰',
+      '🐯',
+      '🐌'
+    ];
     let inc = 0;
-    function getRandomArbitrary(min, max) {
-      return Math.random() * (max - min) + min;
-    }
+    const getRandomArbitrary = (min, max) =>
+      Math.floor(Math.random() * (max - min) + min);
     this.animals = this.emojis.map(glyph => {
       inc += 5;
+      let start = getRandomArbitrary(0, 2);
       return {
         glyph: glyph,
         visibility: false,
         visibilityThreshold: inc,
+        startingPos: start ? '-100px' : '2500px',
+        // startingPos: start,
         leftPos: `${getRandomArbitrary(15, 85)}%`,
-        bottomPos: `${getRandomArbitrary(-10, 150)}px`
+        bottomPos: `${getRandomArbitrary(-200, 0)}px`
       };
     });
     this.setState({ animals: this.animals });
@@ -136,7 +158,7 @@ class Game extends React.Component {
   render() {
     const thresholdSettings = {
       start: this.state.threshold,
-      min: 0,
+      min: 128,
       max: 255,
       step: 1,
       onChange: value => {
@@ -160,50 +182,69 @@ class Game extends React.Component {
             </div>
           </div>
         </div>
-        <Button
-          onClick={() => {
-            localStorage.clear();
-            this.props.history.push('/login');
-          }}
-          size='small'
-          style={{ position: 'absolute', top: 10, right: 20 }}
-        >
-          Logout
-        </Button>
-        <Grid
-          relaxed
-          textAlign='center'
-          // style={{ height: '10vh' }}
-          verticalAlign='middle'
-        >
-          <Grid.Column style={{ maxWidth: 450, marginLeft: 400 }}>
-            <Grid.Row style={{ margin: 10 }}>
-              <Button
-                color={this.state.audio ? 'red' : 'green'}
-                onClick={() => this.toggleMicrophone('')}
-              >
-                {this.state.audio ? 'Stop Mic' : 'Start Mic'}
-              </Button>
-            </Grid.Row>
-            {this.state.audio && (
-              <Grid.Row style={{ margin: 10 }}>
-                <AudioListener
-                  {...this.state}
-                  handleAboveThreshold={this.handleAboveThreshold}
-                />
-                <Form.Field>
-                  <Label>Threshold: {this.state.threshold}</Label>
-                  <Slider
-                    color='green'
-                    value={this.state.threshold}
-                    settings={thresholdSettings}
-                    onChange={this.handleChange}
-                  />
-                </Form.Field>
+        <div className='menu-container'>
+          <div className={this.state.menuDropped ? 'dropped' : 'collapsed'}>
+            <Grid>
+              <Grid.Row style={{ paddingBottom: 5 }}>
+                <Container>
+                  <Menu size='large'>
+                    <Menu.Item>
+                      <Button
+                        icon
+                        labelPosition='left'
+                        color={this.state.audio ? 'red' : 'green'}
+                        onClick={() => this.toggleMicrophone('')}
+                      >
+                        <Icon name={this.state.audio ? 'pause' : 'play'} />
+                        {this.state.audio ? 'Stop' : 'Start'}
+                      </Button>
+                      {this.state.audio && (
+                        <AudioListener
+                          {...this.state}
+                          handleAboveThreshold={this.handleAboveThreshold}
+                        />
+                      )}
+                    </Menu.Item>
+                    {this.state.audio && (
+                      <Menu.Item style={{ width: '65%' }}>
+                        <Label pointing='right'>Threshold</Label>
+                        <Container>
+                          <Slider
+                            color='green'
+                            value={this.state.threshold}
+                            settings={thresholdSettings}
+                            onChange={this.handleChange}
+                          />
+                        </Container>
+                      </Menu.Item>
+                    )}
+                    <Menu.Item position='right'>
+                      <Button
+                        onClick={() => {
+                          localStorage.clear();
+                          this.props.history.push('/login');
+                        }}
+                        size='small'
+                      >
+                        Logout
+                      </Button>
+                    </Menu.Item>
+                  </Menu>
+                </Container>
               </Grid.Row>
-            )}
-          </Grid.Column>
-        </Grid>
+              <Grid.Row centered style={{ padding: 0 }}>
+                <Button
+                  circular
+                  onClick={() =>
+                    this.setState({ menuDropped: !this.state.menuDropped })
+                  }
+                  icon={this.state.menuDropped ? 'angle up' : 'angle down'}
+                  style={{ opacity: 0.7 }}
+                />
+              </Grid.Row>
+            </Grid>
+          </div>
+        </div>
         <Grid
           verticalAlign='bottom'
           style={{

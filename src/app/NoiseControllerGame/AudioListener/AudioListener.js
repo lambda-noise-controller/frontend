@@ -26,7 +26,7 @@ class AudioListener extends React.Component {
   render() {
     return (
       <div className='microphone'>
-        🎤 {Math.max.apply(Math, this.audioData)}
+        🎤 {Math.max.apply(Math, this.audioData) - 128}
       </div>
     );
   }
