@@ -50,15 +50,14 @@ class Game extends React.Component {
     const getRandomArbitrary = (min, max) =>
       Math.floor(Math.random() * (max - min) + min);
     this.animals = this.emojis.map(glyph => {
-      inc += 5;
-      let start = getRandomArbitrary(0, 2);
+      inc += 3;
+      let parity = getRandomArbitrary(0, 2);
       return {
         glyph: glyph,
         visibility: false,
         visibilityThreshold: inc,
-        startingPos: start ? '-100px' : '2500px',
-        // startingPos: start,
-        leftPos: `${getRandomArbitrary(15, 85)}%`,
+        startingPos: !parity ? '-200px' : '2500px',
+        leftPos: getRandomArbitrary(15, 50) + parity * 35,
         bottomPos: `${getRandomArbitrary(-200, 0)}px`
       };
     });
@@ -71,7 +70,7 @@ class Game extends React.Component {
 
   startTimer = () => {
     clearInterval(this.timer);
-    this.timer = setInterval(this.tick, 500);
+    this.timer = setInterval(this.tick, 1000);
   };
 
   stopTimer = () => {
@@ -80,7 +79,6 @@ class Game extends React.Component {
     this.resetAnimals();
   };
 
-  // resetAnimals = () => this.setState({ visibleAnimals: [] });
   resetAnimals = () => {
     const allInvisible = this.state.animals.map(animal => {
       return { ...animal, visibility: false };
@@ -158,7 +156,7 @@ class Game extends React.Component {
   render() {
     const thresholdSettings = {
       start: this.state.threshold,
-      min: 128,
+      min: 126,
       max: 255,
       step: 1,
       onChange: value => {
@@ -199,10 +197,23 @@ class Game extends React.Component {
                         {this.state.audio ? 'Stop' : 'Start'}
                       </Button>
                       {this.state.audio && (
-                        <AudioListener
-                          {...this.state}
-                          handleAboveThreshold={this.handleAboveThreshold}
-                        />
+                        <div className='audio-info'>
+                          <div style={{ display: 'none' }}>
+                            <AudioListener
+                              {...this.state}
+                              handleAboveThreshold={this.handleAboveThreshold}
+                            />
+                          </div>
+                          <span
+                            style={
+                              this.state.ticksWhenSilent
+                                ? { color: 'black' }
+                                : { color: 'red' }
+                            }
+                          >
+                            {this.state.ticksWhenSilent}
+                          </span>
+                        </div>
                       )}
                     </Menu.Item>
                     {this.state.audio && (

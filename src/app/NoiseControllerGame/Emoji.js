@@ -6,8 +6,16 @@ const Emoji = props => {
       className={!props.visibility ? 'hidden' : 'visible'}
       style={
         !props.visibility
-          ? { left: props.startingPos, bottom: props.bottomPos }
-          : { left: props.leftPos, bottom: props.bottomPos }
+          ? {
+              left: props.startingPos,
+              bottom: props.bottomPos,
+              animationDelay: `0.${props.leftPos}s`
+            }
+          : {
+              left: `${props.leftPos}%`,
+              bottom: props.bottomPos,
+              animationDelay: `0.${props.leftPos}s`
+            }
       }
     >
       <span role='img' aria-label='Animal'>
