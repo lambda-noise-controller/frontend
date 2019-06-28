@@ -2,15 +2,7 @@ import React from 'react';
 import Loader from 'react-loader-spinner';
 import { connect } from 'react-redux';
 import { addClassroom, getUserId, getClassroom } from '../../store/actions';
-import {
-  Button,
-  Form,
-  Label,
-  Grid,
-  Message,
-  Icon,
-  Input
-} from 'semantic-ui-react';
+import { Button, Form, Grid, Message } from 'semantic-ui-react';
 
 class AddClassroom extends React.Component {
   state = { classroom: '' };

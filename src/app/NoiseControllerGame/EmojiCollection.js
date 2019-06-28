@@ -7,7 +7,7 @@ const EmojiCollection = props => {
     return (
       <div className='animals'>
         {props.emojis.map(emoji => {
-          return <Emoji {...emoji} />;
+          return <Emoji {...emoji} key={emoji.glyph} />;
         })}
       </div>
     );

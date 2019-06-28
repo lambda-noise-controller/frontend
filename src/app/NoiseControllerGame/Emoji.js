@@ -10,7 +10,9 @@ const Emoji = props => {
           : { left: props.leftPos, bottom: props.bottomPos }
       }
     >
-      {props.glyph}
+      <span role='img' aria-label='Animal'>
+        {props.glyph}
+      </span>
     </div>
   );
 };

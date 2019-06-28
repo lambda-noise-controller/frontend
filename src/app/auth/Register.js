@@ -48,7 +48,6 @@ class Register extends React.Component {
             <Form.Input
               fluid
               type='text'
-              j
               name='username'
               icon='user'
               iconPosition='left'
